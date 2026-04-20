@@ -3,7 +3,9 @@
 # 🧠 semantic-cache-engine — Redis-Compatible LLM Response Cache
 
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
-[![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector%20Store-00E5FF?style=flat-square)](https://trychroma.com)
+[![CI](https://github.com/m4stanuj/semantic-cache-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/m4stanuj/semantic-cache-engine/actions)
+[![Release](https://img.shields.io/github/v/release/m4stanuj/semantic-cache-engine?style=flat-square&color=00E5FF)](https://github.com/m4stanuj/semantic-cache-engine/releases)
+[![Stars](https://img.shields.io/github/stars/m4stanuj/semantic-cache-engine?style=flat-square&color=yellow)](https://github.com/m4stanuj/semantic-cache-engine/stargazers)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![API Cost](https://img.shields.io/badge/API%20Savings-40--60%25-brightgreen?style=flat-square)]()
 
