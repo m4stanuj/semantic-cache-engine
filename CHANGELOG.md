@@ -8,6 +8,7 @@ All notable changes to Semantic Cache Engine are documented here.
 - Packaging metadata for `pip install .`
 - Public `semantic_cache` import module matching the README examples
 - CI test execution in addition to syntax linting
+- M4ST ecosystem links in README
 
 ### Fixed
 - `@cache.wrap` decorator API now exists on `SemanticCache`

@@ -23,6 +23,16 @@ Every time your AI app sends a similar (but not identical) query to an LLM API, 
 
 **Semantic Cache Engine solves this.** It stores LLM responses as vector embeddings and retrieves them when a new query is semantically similar above a configurable threshold — no API call needed.
 
+## M4ST Ecosystem
+
+| Repo | Role |
+|------|------|
+| [MAST](https://github.com/m4stanuj/MAST) | Flagship AI operator stack |
+| [mast-llm-router](https://github.com/m4stanuj/mast-llm-router) | Task-aware LLM fallback router |
+| [semantic-cache-engine](https://github.com/m4stanuj/semantic-cache-engine) | This repo: standalone semantic cache module |
+| [openwork](https://github.com/m4stanuj/openwork) | Universal MCP workspace/config layer |
+| [m4stclaw-legacy-archive](https://github.com/m4stanuj/m4stclaw-legacy-archive) | Historical archive and lineage |
+
 ## ⚙️ How It Works
 
 ```
