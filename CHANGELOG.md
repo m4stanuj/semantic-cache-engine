@@ -2,6 +2,18 @@
 
 All notable changes to Semantic Cache Engine are documented here.
 
+## [1.4.1] — 2026-05-29
+
+### Added
+- Packaging metadata for `pip install .`
+- Public `semantic_cache` import module matching the README examples
+- CI test execution in addition to syntax linting
+
+### Fixed
+- `@cache.wrap` decorator API now exists on `SemanticCache`
+- README constructor aliases `ttl` and `persist_directory` are supported
+- Hit-rate test now uses approximate floating-point comparison
+
 ## [1.4.0] — 2026-04-05
 
 ### Added

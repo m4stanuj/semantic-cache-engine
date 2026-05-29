@@ -2,6 +2,7 @@
 Semantic Cache Engine - Core Module
 Drop-in LLM response cache using ChromaDB vector similarity.
 """
+import functools
 import hashlib
 import time
 from typing import Optional
@@ -44,12 +45,19 @@ class SemanticCache:
         ttl_seconds: int = 3600,
         persist_dir: Optional[str] = "./cache_db",
         embedding_model: str = "all-mpnet-base-v2",
+        ttl: Optional[int] = None,
+        persist_directory: Optional[str] = None,
     ):
         if chromadb is None:
             raise ImportError("pip install chromadb")
         if SentenceTransformer is None:
             raise ImportError("pip install sentence-transformers")
         
+        if ttl is not None:
+            ttl_seconds = ttl
+        if persist_directory is not None:
+            persist_dir = persist_directory
+
         self.similarity_threshold = similarity_threshold
         self.max_entries = max_entries
         self.ttl_seconds = ttl_seconds
@@ -158,6 +166,19 @@ class SemanticCache:
             metadata={"hnsw:space": "cosine"},
         )
         self.stats = {"hits": 0, "misses": 0, "evictions": 0}
+
+    def wrap(self, func):
+        """Decorator method for caching single-prompt LLM functions."""
+        @functools.wraps(func)
+        def wrapper(query: str, *args, **kwargs):
+            cached = self.get(query)
+            if cached is not None:
+                return cached
+            response = func(query, *args, **kwargs)
+            self.put(query, response)
+            return response
+
+        return wrapper
     
     def __repr__(self):
         return (
@@ -179,6 +200,7 @@ def cache_wrap(cache_instance: SemanticCache):
             return openai.chat(prompt)
     """
     def decorator(func):
+        @functools.wraps(func)
         def wrapper(query: str, *args, **kwargs):
             cached = cache_instance.get(query)
             if cached is not None:

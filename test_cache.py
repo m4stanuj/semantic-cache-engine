@@ -2,6 +2,7 @@
 Tests for Semantic Cache Engine
 """
 import pytest
+from cache import cache_wrap
 
 
 class TestSemanticCache:
@@ -31,7 +32,7 @@ class TestSemanticCache:
         misses = 42
         total = hits + misses
         hit_rate = (hits / total) * 100
-        assert hit_rate == 58.0
+        assert hit_rate == pytest.approx(58.0)
 
     def test_eviction_at_capacity(self):
         """Cache should evict oldest when at max_entries."""
@@ -46,3 +47,27 @@ class TestSemanticCache:
         key1 = hashlib.md5(query.encode()).hexdigest()
         key2 = hashlib.md5(query.encode()).hexdigest()
         assert key1 == key2
+
+    def test_cache_wrap_decorator_hits_before_calling_function(self):
+        """Decorator should return cached responses without calling the wrapped function."""
+        class FakeCache:
+            def __init__(self):
+                self.stored = {}
+
+            def get(self, query):
+                return self.stored.get(query)
+
+            def put(self, query, response):
+                self.stored[query] = response
+
+        fake = FakeCache()
+        calls = {"count": 0}
+
+        @cache_wrap(fake)
+        def ask(prompt):
+            calls["count"] += 1
+            return f"answer:{prompt}"
+
+        assert ask("hello") == "answer:hello"
+        assert ask("hello") == "answer:hello"
+        assert calls["count"] == 1
